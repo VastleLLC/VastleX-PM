@@ -3,7 +3,7 @@
 # Any player that connects with an unmatched secret will be kicked
 proxy:
   # You can disable secret verification by leaving it empty,
-  # WARNING: That put your server at-risk, since auth is disabled, any player can join as any name they like
+  # WARNING: That puts your server at-risk, since auth is disabled, any player can join as any name they like
   secret: "xZeroMCPE"
 
 messages:
