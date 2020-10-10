@@ -33,6 +33,9 @@ to another server within VastleX proxy
         $vastlex = \xZeroMCPE\VastleX\VastleX::getInstance()->transfer($player, "127.0.0.1", 19133);
 ```
 Please note that by default, it closes the connection as soon as the transfer takes place,
+### Basic use
+You can use the `/transfer <player name> <address> <port>` to transfer to any server within the proxy
+The above command requires operator command.
 
 ### Custom Implementation ?
 if you wish to use it in your custom implementation, without the use of the API,

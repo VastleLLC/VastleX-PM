@@ -4,10 +4,14 @@
 namespace xZeroMCPE\VastleX;
 
 
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
 use pocketmine\network\mcpe\protocol\ScriptCustomEventPacket;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
+use pocketmine\Server;
 use pocketmine\utils\Config;
+use pocketmine\utils\TextFormat;
 use xZeroMCPE\VastleX\Packet\VastleXTransferPacket;
 
 class VastleX extends PluginBase
@@ -60,5 +64,24 @@ class VastleX extends PluginBase
 
         //Close their connection after sending them the transfer packet
         $player->close("Transferring", $message, strlen($message) !== 0);
+    }
+
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool
+    {
+        if(!$sender->isOp()) {
+            $sender->sendMessage(TextFormat::RED . "You don't have permission to do that!");
+        } else {
+            if(count($args) >= 3) {
+                if(($player = Server::getInstance()->getPlayer($args[0])) != null) {
+                   $sender->sendMessage("Attempting to transfer " . $player->getName() . " to {$args[1]}:{$args[2]}");
+                    VastleX::getInstance()->transfer($player, $args[1], $args[2]);
+                } else {
+                    $sender->sendMessage(TextFormat::RED . "We can't find anyone that goes by " . $args[0]);
+                }
+            } else {
+                $sender->sendMessage(TextFormat::RED . "You either didn't supply the required arguments\n /transfer player-name address port");
+            }
+        }
+        return true;
     }
 }

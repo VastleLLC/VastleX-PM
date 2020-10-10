@@ -2,3 +2,7 @@ name: VastleX
 version: 1.0.0
 api: 3.2.0
 main: xZeroMCPE\VastleX\VastleX
+
+commands:
+  transfer:
+    description: "Transfer to a server using VastleX"
