@@ -13,16 +13,17 @@ use pocketmine\utils\TextFormat;
 class VastleXListener implements Listener
 {
 
-    public function onPacket(DataPacketReceiveEvent $event) {
+    public function onPacket(DataPacketReceiveEvent $event): void
+    {
 
         $player =  $event->getPlayer();
         $packet = $event->getPacket();
 
         if($packet instanceof LoginPacket) {
-            if(strlen(VastleX::getInstance()->getSecret()) == 0) {
+            if(VastleX::getInstance()->getSecret() === '') {
                 $this->handle($player, $packet);
             } else {
-                if($packet->clientData['ThirdPartyName'] != VastleX::getInstance()->getSecret()) {
+                if($packet->clientData['ThirdPartyName'] !== VastleX::getInstance()->getSecret()) {
                     VastleX::getInstance()->getLogger()->error(TextFormat::LIGHT_PURPLE . $player->getAddress() . ":" . $player->getPort() . " tried to login with an incorrect secret: " . TextFormat::LIGHT_PURPLE . $packet->clientData['ThirdPartyName']);
                     $player->kick(VastleX::getInstance()->getConfig()->getNested("messages.disconnect-proxy"), false);
                 } else {
@@ -32,7 +33,8 @@ class VastleXListener implements Listener
         }
     }
 
-    public function handle(Player &$player, LoginPacket $packet) {
+    public function handle(Player $player, LoginPacket $packet): void
+    {
 
         /*
          * Update their XUID with the one given by VastleX
@@ -49,7 +51,7 @@ class VastleXListener implements Listener
 
             $prop = $reflection->getProperty("ip");
             $prop->setAccessible(true);
-            $prop->setValue($player, explode(":", $packet->clientData["PlatformOfflineId"])[0]);
+            $prop->setValue($player, explode(":", $packet->clientData["ServerAddress"])[0]);
 
         VastleX::getInstance()->getLogger()->info(TextFormat::LIGHT_PURPLE . $player->getAddress() . ":" . $player->getPort() . TextFormat::GREEN . " passed secret verification");
     }
