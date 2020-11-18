@@ -47,8 +47,6 @@ An example would be:
         $pk = new VastleXTransferPacket();
         $pk->host = "127.0.0.1";
         $pk->port = 19133;
-        $pk->message = "Hey man, you're being transferred!";
-        $pk->hideMessage = false; //shows the message
 ```
 
 ### Other stuff...

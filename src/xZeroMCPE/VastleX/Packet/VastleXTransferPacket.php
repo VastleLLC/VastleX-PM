@@ -14,8 +14,6 @@ class VastleXTransferPacket extends DataPacket
 
     public string $host;
     public string $port;
-    public string $message;
-    public string $hideMessage;
 
     public function encodePayload() : void
     {
